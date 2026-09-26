@@ -22,9 +22,8 @@ Test it: pytest tests/test_streamlit.py -k process_file
 # Reference #4 and #5 cover the two things that are new here.
 
 
-
-import streamlit as st
 import json
+import streamlit as st
 from packaging_parser import calc_total_units, get_unit, parse_packaging
 
 st.title("Process File of Packages")
@@ -42,12 +41,18 @@ if package_file:
     for line in lines:
         line = line.strip()      
         if not line:             
-            continue             
-        package = parse_packaging(line)  
-        parsed_packages.append(package)    
-        total = calc_total_units(package)
-        unit = get_unit(package)
-        st.info(f"{line} ➡️ Total 📦 Size: {total} {unit}")
+            continue    
+        try:         
+            package = parse_packaging(line)  
+        except ValueError as e:
+            st.error(f"Error parsing line '{line}': {e}")
+            package = None
+
+        if package:
+            parsed_packages.append(package)
+            total = calc_total_units(package)
+            unit = get_unit(package)
+            st.info(f"{line} ➡️ Total 📦 Size: {total} {unit}")
 
     with open(output_file, "w") as f:
         json.dump(parsed_packages, f, indent=4)

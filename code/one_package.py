@@ -29,11 +29,19 @@ package_data = st.text_input(
 )
 
 if package_data:
-    package = parse_packaging(package_data)
-    total = calc_total_units(package)
-    unit = get_unit(package)
+    try:
+        package = parse_packaging(package_data)
+    except ValueError as e:
+        st.error(f"Error parsing package data: {e}")
+    else:
+        total = calc_total_units(package)
+        unit = get_unit(package)
 
-    for level in package:
-        for name, quantity in level.items():
-            st.info(f"{name} ➡️ {quantity}")
-    st.success(f"Total 📦 Size: {total} {unit}")
+    if package:
+        total = calc_total_units(package)
+        unit = get_unit(package)
+
+        for level in package:
+            for name, quantity in level.items():
+                st.info(f"{name} ➡️ {quantity}")
+        st.success(f"Total 📦 Size: {total} {unit}")

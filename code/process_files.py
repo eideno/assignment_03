@@ -66,9 +66,13 @@ if package_file and clicked:
         line = line.strip()
         if not line:
             continue
-        package = parse_packaging(line)
+        try:
+            package = parse_packaging(line)
+        except ValueError:
+            st.error(f"Could not parse line: {line}")
+            continue
         parsed_packages.append(package)
-
+        
     with open(output_file, "w") as f:
         json.dump(parsed_packages, f, indent=4)
 
