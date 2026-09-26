@@ -17,7 +17,6 @@ Test it: pytest tests/test_streamlit.py -k one_package
 
 import streamlit as st
 
-
 from packaging_parser import calc_total_units, get_unit, parse_packaging
 
 st.title("Process One Package")
@@ -34,10 +33,6 @@ if package_data:
     except ValueError as e:
         st.error(f"Error parsing package data: {e}")
     else:
-        total = calc_total_units(package)
-        unit = get_unit(package)
-
-    if package:
         total = calc_total_units(package)
         unit = get_unit(package)
 
