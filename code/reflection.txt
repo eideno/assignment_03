@@ -1,6 +1,9 @@
-Write your reflection here.
-
-See reflection.md for what makes a good reflection — be specific, use the
-terminology from this assignment (rerun, widget, return value, guard, bytes vs.
-text, decode, session state, initialise once, button-triggered, metric), and make
-it actionable.
+This assignment provided a comprehensive introduction to building interactive Streamlit applications and managing data flow across varying user inputs.
+ Starting with one_package.py, I learned that because a script experiences a complete rerun on every interaction,
+a widget's return value must be placed behind a guard to prevent execution errors when the text input is initially empty.
+ Building on that foundation in process_file.py, I handled file uploads and encountered the important distinction between bytes vs. text. 
+ To properly process the incoming package descriptions, I needed to decode the raw file contents into standard strings before they could be read line by line.
+The final script, process_files.py, introduced the complex challenge of data persistence, as standard variables reset automatically during every app interaction. 
+To successfully maintain a running tally, I used session state to initialize my tracking variables once, 
+to make sure that state updates were strictly button-triggered to avoid duplicate processing. 
+Ultimately, learning this pattern allowed me to accurately display the total processed files and packages using a metric component.
